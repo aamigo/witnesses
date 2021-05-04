@@ -1,9 +1,8 @@
-name: "Send Today's Scripture out!"
+name: "Testing all Telegram out!"
 
 on:
-  # run once per/day
-  schedule:
-    - cron: '7 23 * * *'
+  # so we can manually run a test also
+  workflow_dispatch:
 
 jobs:
   build:
@@ -28,7 +27,9 @@ jobs:
           /bin/git clone git@github.com:trueChristian/witnesses.git witnesses
       - name: Send Daily Scripture To Telegram
         env:
-          BOT_CONF: ${{ secrets.TG_SCRIPTURE_BOT_CONF }}
+          BOT_CONF: ${{ secrets.TG_TEST_BOT_CONF }}
         run: |
           cd witnesses
           /bin/bash ./src/telegram.sh --bot-conf "$BOT_CONF" --message-url "https://raw.githubusercontent.com/trueChristian/daily-scripture/master/README.html" --format html
+          /bin/bash ./src/telegram.sh --bot-conf "$BOT_CONF" --message-url "https://raw.githubusercontent.com/trueChristian/daily-light/master/morning.html" --format html
+          /bin/bash ./src/telegram.sh --bot-conf "$BOT_CONF" --message-url "https://raw.githubusercontent.com/trueChristian/daily-light/master/evening.html" --format html
