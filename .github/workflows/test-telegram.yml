@@ -1,7 +1,7 @@
 name: "Testing all Telegram out!"
 
 on:
-  # so we can manually run a test also
+  # so we can manually run a test
   workflow_dispatch:
 
 jobs:
