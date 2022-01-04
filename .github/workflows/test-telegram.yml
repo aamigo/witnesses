@@ -30,6 +30,6 @@ jobs:
           BOT_CONF: ${{ secrets.TG_TEST_BOT_CONF }}
         run: |
           cd witnesses
-          /bin/bash ./src/telegram.sh --bot-conf "$BOT_CONF" --message-url "https://raw.githubusercontent.com/trueChristian/daily-scripture/master/README.html" --format html
+          /bin/bash ./src/telegram.sh --bot-conf "$BOT_CONF" --message-url "https://raw.githubusercontent.com/trueChristian/daily-scripture/master/README.tg" --format html
           /bin/bash ./src/telegram.sh --bot-conf "$BOT_CONF" --message-url "https://raw.githubusercontent.com/trueChristian/daily-light/master/morning.html" --format html
           /bin/bash ./src/telegram.sh --bot-conf "$BOT_CONF" --message-url "https://raw.githubusercontent.com/trueChristian/daily-light/master/evening.html" --format html
