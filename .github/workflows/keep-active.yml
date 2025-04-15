@@ -1,17 +1,18 @@
 name: "Keep the witnesses repository active!"
 
 on:
-  # run Thursday at 02:23 every week 
+  # Run Thursday at 02:23 every week
   schedule:
     - cron: '23 2 * * THU'
-  # so we can manually update
+  # Allow manual execution
   workflow_dispatch:
 
 jobs:
-  build:
-    runs-on: [ubuntu-20.04]
+  keep-repo-active:
+    runs-on: ubuntu-22.04
+
     steps:
-      - name: Setup gitHub User Details
+      - name: Setup GitHub User Details
         env:
           GIT_USER: ${{ secrets.GIT_USER }}
           GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
@@ -20,11 +21,19 @@ jobs:
           SSH_KEY: ${{ secrets.SSH_KEY }}
           SSH_PUB: ${{ secrets.SSH_PUB }}
         run: |
-          /bin/bash <(/bin/curl -s https://raw.githubusercontent.com/vdm-io/github-user/master/src/setup.sh) --gpg-key "$GPG_KEY" --gpg-user "$GPG_USER" --ssh-key "$SSH_KEY" --ssh-pub "$SSH_PUB" --git-user "$GIT_USER" --git-email "$GIT_EMAIL"
+          /bin/bash <(/bin/curl -s https://raw.githubusercontent.com/vdm-io/github-user/master/src/setup.sh) \
+            --gpg-key "$GPG_KEY" \
+            --gpg-user "$GPG_USER" \
+            --ssh-key "$SSH_KEY" \
+            --ssh-pub "$SSH_PUB" \
+            --git-user "$GIT_USER" \
+            --git-email "$GIT_EMAIL"
+
       - name: Clone Master Repository
-        run: |
-          /bin/git clone git@github.com:trueChristian/witnesses.git witnesses
-      - name: Set Active
+        run: git clone git@github.com:trueChristian/witnesses.git witnesses
+
+      - name: Set Repository Active
         run: |
           cd witnesses
-          /bin/bash ./src/active.sh
+          ./src/active.sh
+
